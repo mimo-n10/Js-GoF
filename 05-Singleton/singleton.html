@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>Singleton</title>
+</head>
+<body>
+
+<script>
+
+
+
+/**
+ * 登録ノートクラス
+ */
+function registerNote()
+{
+	//コンストラクタなし
+}
+
+
+/**
+ * getInstance 関数
+ * 
+ * @return rNote
+ */
+registerNote.prototype.getInstance = function()
+{
+	if(this.rNote_ === undefined)
+	{
+		this.rNote_ 		= new registerNote();
+		this.rNote_.objId 	= Math.floor(Math.random() * 100000);
+	}
+	return this.rNote_;
+}
+
+/**
+ * メイン
+ */
+console.log("objId:" + registerNote.prototype.getInstance().objId);
+console.log("objId:" + registerNote.prototype.getInstance().objId);
+console.log("objId:" + registerNote.prototype.getInstance().objId);
+
+</script>
+</body>
+</html>

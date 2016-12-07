@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>Observer</title>
+
+</head>
+<body>
+
+<script>
+
+
+//継承関数
+var inherit = function(objChild, objParent)
+{
+	Object.setPrototypeOf(objChild.prototype, objParent.prototype);
+};
+
+//インタフェース
+var ifObsvr = function()
+{
+	//コンストラクタなし
+};
+
+ifObsvr.prototype.update = function()
+{
+	throw new Error('Not Implemented');
+};
+
+//オブザーバ（監視者）
+var obsvrA = function()
+{
+
+};
+
+obsvrA.prototype.update = function()
+{
+	console.log("報告きたよ!");
+};
+
+//obsvrA ?　インタフェース(ifObsvr)
+inherit(obsvrA, ifObsvr);
+
+
+
+
+//通知者 基本クラス
+var notifer = function()
+{
+	this.obsrvList_ = [];
+	this.score_ = 0;
+};
+
+notifer.prototype.addObsrv = function(newObserv)
+{
+	this.obsrvList_.push(newObserv);
+};
+
+notifer.prototype.notifyObsrvs = function()
+{
+	var obsList = this.obsrvList_;
+
+	if(obsList.legth != 0)
+	{
+		obsList.map(function(obs)
+		{
+			obs.update();
+		});
+	}
+};
+
+notifer.prototype.addScore = function(point)
+{
+	this.score_ += point;
+	console.log("現在合計:" + this.score_ + "です。");
+	if(this.score_ >= 100)
+	{
+		this.notifyObsrvs();
+	}
+};
+
+//科目Aクラス　
+var subjectA = function()
+{
+	//親クラスのコンストラクタ
+	notifer.call(this);
+}
+
+//継承　subjectA ?　notifer
+inherit(subjectA, notifer);
+
+
+
+//メイン
+var obsA = new obsvrA();//監視者
+var subA = new subjectA;//通知者　科目A
+
+subA.addObsrv(obsA);
+subA.addScore(30);
+subA.addScore(25);
+subA.addScore(20);
+subA.addScore(20);
+subA.addScore(5);
+
+		</script>
+  </body>
+</html>
