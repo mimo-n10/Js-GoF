@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>Memento</title>
+
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+
+/**
+ * 計算クラス
+ */
+var calc = function()
+{
+	//コンストラクタ
+	this.tempValue = 0;
+};
+
+/**
+ * 足し算を実行するメソッド
+ * @param val
+ */
+calc.prototype.add = function(val)
+{
+	this.tempValue += val;
+};
+
+/**
+ * 一時保存した結果を取得
+ * @return tempValue
+ */
+calc.prototype.getTemp = function()
+{
+	return this.tempValue;
+};
+
+/**
+ * Mementoを作成
+ * @return Memento
+ */
+calc.prototype.createMemento = function()
+{
+	return new memento(this.tempValue);
+};
+
+/**
+ * Mementoに保存中のデータをセットする
+ * @param mmt
+ */
+calc.prototype.setMemento = function(mmt)
+{
+	this.tempValue = mmt.getSaveData();
+};
+
+/**
+ * Mementoクラス
+ * 途中経過を保持する
+ * @param data
+ */
+var memento = function(data)
+{
+	this.save = data;
+};
+
+/**
+ * Mementoに保存されていたセーブデータを取得
+ * @return save
+ */
+memento.prototype.getSaveData = function()
+{
+	return this.save;
+};
+
+
+/**
+ * 利用者クラス
+ */
+var user = function()
+{
+	this.store = {};
+
+	var cal = new calc();
+
+	for (var cnt=0 ; cnt <= 5 ; cnt++)
+	{
+		cal.add(cnt);
+	}
+
+	console.log("合計："+ cal.getTemp());
+	this.store = {"5までの足し算" : cal.createMemento()};
+
+	var cal2 = new calc();
+	cal2.setMemento(this.store["5までの足し算"]);
+
+	for (cnt=6 ; cnt <= 10 ; cnt++)
+	{
+		cal.add(cnt);
+	}
+
+	console.log("合計："+ cal.getTemp());
+	this.store = {"10までの足し算" : cal2.createMemento()};
+
+};
+
+/**
+ * メイン
+ */
+var userA = new user();
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>State</title>
+</head>
+<body>
+
+<script>
+
+/**
+ * Read only status
+ */
+const STATE_NORMAL 	= 0;
+const STATE_BAD		= 1;
+
+
+/**
+ * 継承関数
+ * @param objChild
+ * @param objParent
+ */
+var inherit = function(objChild, objParent)
+{
+	Object.setPrototypeOf(objChild.prototype, objParent.prototype);
+};
+
+
+/**
+ * Stateインタフェース
+ */
+var ifState = function()
+{
+	//コンストラクタなし
+	
+};
+
+/**
+ * greet 関数
+ */
+ifState.prototype.greet = function()
+{
+	throw new Error('Not Implemented');
+};
+
+/**
+ * action 関数
+ */
+ifState.prototype.action = function()
+{
+	throw new Error('Not Implemented');
+};
+
+
+
+/**
+ * 状態クラス（normal）
+ */
+var normalState = function()
+{
+	//コンストラクタ
+	
+};
+
+/**
+ * greet 関数
+ * @return string
+ */
+normalState.prototype.greet = function()
+{
+	return "【普通】こんにちは^^";
+	
+};
+
+/**
+ * action 関数
+ * @return string
+ */
+normalState.prototype.action = function()
+{
+
+	return "【普通】スキップルンルン";
+};
+
+
+//インタフェースをimplements
+inherit(normalState, ifState);
+
+
+
+
+/**
+ * 状態クラス（bad）
+ */
+var badState = function()
+{
+	//コンストラクタ
+	
+};
+
+/**
+ * greet 関数
+ * @return string
+ */
+badState.prototype.greet = function()
+{
+	return "【悪い】あん？なんか用？";
+	
+};
+
+/**
+ * action 関数
+ * @return string
+ */
+badState.prototype.action = function()
+{
+
+	return "【悪い】全力で走る";
+};
+
+
+//インタフェースをimplements
+inherit(badState, ifState);
+
+
+
+/**
+ * クラスAchan
+ */
+var Achan = function()
+{
+	//コンストラクタ
+	this.state = undefined;
+	
+};
+
+/**
+ * changeStatus 関数
+ * 状態を変える
+ * @param ifSt
+ */
+Achan.prototype.changeStatus = function(ifSt)
+{
+	this.state = ifSt;
+};
+
+/**
+ * greet 関数
+ * 挨拶をする
+ * @return string
+ */
+Achan.prototype.greet = function()
+{
+	return this.state.greet();
+
+};
+/**
+ * action 関数
+ * 行動する
+ * @return string
+ */
+Achan.prototype.action = function()
+{
+	return this.state.action();
+};
+
+
+/**
+ * メイン
+ */
+var normal 	= new normalState();
+var bad 	= new badState();
+
+var achan 	= new Achan();
+
+achan.changeStatus(normal);
+console.log(achan.greet());
+console.log(achan.action());
+
+achan.changeStatus(bad);
+console.log(achan.greet());
+console.log(achan.action());
+
+</script>
+</body>
+</html>
