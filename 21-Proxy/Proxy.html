@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>Proxy</title>
+</head>
+<body>
+
+<script>
+
+//継承関数
+var inherit = function(objChild, objParent)
+{
+	Object.setPrototypeOf(objChild.prototype, objParent.prototype);
+};
+
+
+/**
+ * 先生インタフェース
+ */
+function ifTeacher(letter)
+{
+	//コンストラクタ
+}
+/**
+ * 質問1
+ */
+ifTeacher.prototype.question1 = function()
+{
+	throw new Error('Not Implemented.');
+};
+
+/**
+ * 質問2
+ */
+ifTeacher.prototype.question2 = function()
+{
+	throw new Error('Not Implemented.');
+};
+
+/**
+ * 質問3
+ */
+ifTeacher.prototype.question3 = function()
+{
+	throw new Error('Not Implemented.');
+};
+
+
+
+
+/**
+ * クラス　メインA先生
+ * @constructor
+ */
+function mainA()
+{
+	//コンストラクタ
+}
+
+/**
+ * question1 関数
+ */
+mainA.prototype.question1 = function()
+{
+	console.log("Answer1");
+};
+
+/**
+ * question2 関数
+ */
+mainA.prototype.question2 = function()
+{
+	console.log("Answer3");
+};
+
+/**
+ * question3 関数
+ */
+mainA.prototype.question3 = function()
+{
+	console.log("Answer3");
+};
+
+//インタフェースをimplementする
+inherit(mainA, ifTeacher);
+
+
+
+/**
+ * クラス　subB先生
+ * @constructor
+ */
+function subB()
+{
+	//コンストラクタ
+	this.teacherA = new mainA();
+}
+
+/**
+ * question1 関数
+ */
+subB.prototype.question1 = function()
+{
+	console.log("Answer1");
+};
+
+/**
+ * question2 関数
+ */
+subB.prototype.question2 = function()
+{
+	console.log("Answer2");
+};
+
+/**
+ * question3 関数
+ */
+subB.prototype.question3 = function()
+{
+	console.log("It's difficult for me.I\'ll ask mainA teacher.");
+	this.teacherA.question3();
+	console.log("from mainA teacher");
+	
+};
+
+//インタフェースをimplementする
+inherit(subB, ifTeacher);
+
+
+/**
+ * メイン
+ */
+
+var partTime = new subB();
+ 
+partTime.question1();
+partTime.question2();
+partTime.question3();
+
+
+
+</script>
+</body>
+</html>

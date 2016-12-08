@@ -18,4 +18,5 @@ TECHSCORE様
 17 Observer 2016.12.4  
 18 Memento 2016.12.6  
 19 State 2016.12.6  
-20 Flyweight  2016.12.8  
+20 Flyweight 2016.12.8  
+21 Proxy 2016.12.08
