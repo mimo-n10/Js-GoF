@@ -1,21 +1,15 @@
 # JavaScript GoF pattern
-‚±‚ÌƒTƒCƒg‚ÍA“ú–{Œê‚Æ‰pŒê‚Å‹Lq‚³‚ê‚Ä‚¢‚Ü‚·B•×‹­—p‚Å‚·B  
+ã“ã®ã‚µã‚¤ãƒˆã¯ã€æ—¥æœ¬èªã¨è‹±èªã§è¨˜è¿°ã•ã‚Œã¦ã„ã¾ã™ã€‚å‹‰å¼·ç”¨ã§ã™ã€‚  
 This page is written by Japanese and English.(to study)  
 
-Ÿ‚ÌƒTƒCƒg‚ğQl‚É‚³‚¹‚Ä‚¢‚½‚¾‚«‚Ü‚µ‚½B  
+æ¬¡ã®ã‚µã‚¤ãƒˆã‚’å‚è€ƒã«ã•ã›ã¦ã„ãŸã ãã¾ã—ãŸã€‚  
 I built my code in reference to these sites.
 
-ƒ\[ƒX‚Íhtml‚Å‚·B"console.log"‚ğg‚Á‚Ä‚¢‚Ü‚·B
-This code is html file, and I use "console.log" function.
-
-Às‚·‚é‚É‚ÍƒfƒoƒbƒOƒ‚[ƒh‚ğg‚Á‚Ä‚­‚¾‚³‚¢B
-Please use debug mode to see the results.
-
 ---
-Google—¬ JavaScript ‚É‚¨‚¯‚éƒNƒ‰ƒX’è‹`‚ÌÀŒ»•û–@  
+Googleæµ JavaScript ã«ãŠã‘ã‚‹ã‚¯ãƒ©ã‚¹å®šç¾©ã®å®Ÿç¾æ–¹æ³•  
 <http://www.techscore.com/tech/DesignPattern/index.html>(Japanese)  
 
-TECHSCORE—l  
+TECHSCOREæ§˜  
 <http://www.yunabe.jp/docs/javascript_class_in_google.html>(Japanese)
 
 ---
