@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>Singleton</title>
+</head>
+<body>
+
+<script>
+
+
+/**
+ * @classdesc 人文字クラス
+ * @constructor {string} letter 1文字
+ */
+function HumanLetter(letter)
+{
+	//コンストラクタ
+	this.letter = letter;
+	this.msg 	= ""; 
+}
+
+/**
+ * getLetter 関数
+ * 
+ * @return {str} letter
+ */
+HumanLetter.prototype.getLetter = function()
+{
+	return this.letter;
+}
+
+/**
+ * getMsg 関数
+ * 
+ * @return {str} msg
+ */
+HumanLetter.prototype.getMsg = function()
+{
+	return this.msg;
+}
+
+
+
+/**
+ * 人文字生成・管理クラス
+ * @constructor
+ */
+function HumanLetterFactory()
+{
+	//コンストラクタ
+	this.map = {};
+}
+
+
+/**
+ * getInstance 関数
+ * 
+ * @return {HumanLetterFactory} singleton_
+ */
+HumanLetterFactory.prototype.getInstance = function()
+{
+	if(this.singleton_ === undefined)
+	{
+		this.singleton_			= new HumanLetterFactory();
+		this.singleton_.objId 	= Math.floor(Math.random() * 100000);//唯一のオブジェクトId
+	}
+	return this.singleton_;
+}
+
+
+/**
+ * getHumanLetter 関数
+ * @param {string} letter 1文字
+ * @return {HumanLetter} 
+ */
+HumanLetterFactory.prototype.getHumanLetter = function(letter)
+{
+	var hLetter = (this.map.hasOwnProperty(letter)) || null;
+	
+	if(hLetter === null)
+	{
+		hLetter	= new HumanLetter(letter);
+		this.map[letter] = hLetter;
+		hLetter.msg = "new created.";
+	}
+	else
+	{
+		hLetter = this.map[letter];
+		hLetter.msg = "already exist."
+	}
+	return hLetter;
+}
+
+/**
+ * メイン
+ */
+
+//唯一のfactoryか確認
+var fact1 = HumanLetterFactory.prototype.getInstance();
+var fact2 = HumanLetterFactory.prototype.getInstance();
+
+console.log(fact1.objId);
+console.log(fact2.objId);
+
+
+var letter = fact1.getHumanLetter("あ");
+console.log(letter.getLetter() +  ":" + letter.getMsg());
+
+letter = fact1.getHumanLetter("い");
+console.log(letter.getLetter() +  ":" + letter.getMsg());
+
+letter = fact1.getHumanLetter("あ");
+console.log(letter.getLetter() +  ":" + letter.getMsg());
+
+letter = fact1.getHumanLetter("い");
+console.log(letter.getLetter() +  ":" + letter.getMsg());
+
+letter = fact1.getHumanLetter("や");
+console.log(letter.getLetter() +  ":" + letter.getMsg());
+
+
+</script>
+</body>
+</html>
