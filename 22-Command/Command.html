@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<title>Proxy</title>
+</head>
+<body>
+
+<script>
+
+//継承関数
+var inherit = function(objChild, objParent)
+{
+	Object.setPrototypeOf(objChild.prototype, objParent.prototype);
+};
+
+
+/**
+ * @classdesc ビーカークラス
+ * @constructor
+ */
+function beaker(water, salt)
+{
+	//コンストラクタ
+	this.water 	= water;
+	this.salt  	= salt;
+	this.melted = true; //食塩が溶けた：true、溶けなかった：false
+	
+	this.mix();
+}
+/**
+ * addSalt メソッド
+ * 食塩を加える
+ * @param {double} [dSalt] - double型の引数
+ */
+beaker.prototype.addSalt = function(dSalt)
+{
+	this.salt += dSalt;
+};
+
+
+/**
+ * addWater メソッド
+ * 水を加える
+ * @param {double} [dWater] - double型の引数
+ */
+beaker.prototype.addWater = function(dWater)
+{
+	this.water += dWater;
+};
+
+/**
+ * mix
+ * かき混ぜる メソッド
+ * 飽和食塩水の濃度　約26.4%
+ */
+beaker.prototype.mix = function()
+{
+	var concentration = this.salt / (this.salt + this.water) * 100;
+	
+	this.melted = (concentration < 26.4) ? true : false;
+
+};
+
+/**
+ * getSalt メソッド
+ * 食塩の量を返す
+ * @return {double} double値を返す
+ */
+beaker.prototype.getSalt = function()
+{
+	return this.salt;
+};
+
+
+/**
+ * getWater メソッド
+ * 食塩の量を返す
+ * @return {double} double値を返す
+ */
+beaker.prototype.getWater = function()
+{
+	return this.water;
+};
+
+
+/**
+ * isMelted メソッド
+ * 食塩が溶けたか溶けていないかを返す
+ * @return {boolean} 真偽値を返す
+ */
+beaker.prototype.isMelted = function()
+{
+	return this.melted;
+};
+
+/**
+ * note メソッド
+ * ノートに書きだす 
+ */
+beaker.prototype.note = function()
+{
+	console.log("水"	+ this.water + "g");
+	console.log("食塩" 	+ this.salt + "g");
+	console.log("濃度" 	+ this.salt / (this.water + this.salt) * 100 + "%");
+	console.log("------");
+};
+
+
+
+
+/**
+ * @classdesc コマンドクラス
+ */
+function command()
+{
+	//コンストラクタ
+	this.bk = undefined;
+}
+
+/**
+ * setBeaker メソッド
+ * ビーカーをセットする
+ * @param {beaker} [bk] - beakerクラスの引数
+ */
+command.prototype.setBeaker = function(bk)
+{
+	this.bk = bk;
+};
+
+
+/**
+ * execute 抽象メソッド
+ * 実験をする
+ */
+command.prototype.execute = function()
+{
+	throw new Error('Not Implemented');
+};
+
+
+
+
+
+
+
+/**
+ * @classdesc 塩を１ｇずつ加えて飽和食塩水を作る実験
+ */
+function addSaltCommand()
+{
+	//コンストラクタなし
+}
+
+
+addSaltCommand.prototype.execute = function()
+{
+	while(this.bk.isMelted())
+	{
+		this.bk.addSalt(1);
+		this.bk.mix();
+	}
+	
+	console.log("食塩を１ｇずつ加える実験");
+	this.bk.note();
+
+};
+
+//commandクラスを継承
+inherit(addSaltCommand, command);
+
+
+
+
+
+
+
+/**
+ * @classdesc 水を１０ｇずつ加えて飽和食塩水を作る実験
+ */
+function addWaterCommand()
+{
+	//コンストラクタなし
+}
+
+
+addWaterCommand.prototype.execute = function()
+{
+	while(!this.bk.isMelted())
+	{
+		this.bk.addWater(10);
+		this.bk.mix();
+	}
+	
+	console.log("水を１０ｇずつ加える実験");
+	this.bk.note();
+
+};
+
+//commandクラスを継承
+inherit(addWaterCommand, command);
+
+
+
+
+
+
+
+/**
+ * @classdesc 食塩水を作る実験
+ */
+function MakeSaltWater()
+{
+	//コンストラクタなし
+}
+
+
+MakeSaltWater.prototype.execute = function()
+{
+	this.bk.mix();	
+	console.log("食塩水を作る実験");
+	this.bk.note();
+
+};
+
+//commandクラスを継承
+inherit(MakeSaltWater, command);
+
+
+
+
+
+
+/**
+ * メイン
+ */
+
+var addSalt = new addSaltCommand();
+
+addSalt.setBeaker(new beaker(100, 0));	//100gの水の入ったビーカー
+addSalt.execute();
+
+
+var addWater = new addWaterCommand();
+
+addWater.setBeaker(new beaker(0, 10));	//10gの塩の入ったビーカー
+addWater.execute();
+
+
+var makeSaltWater = new MakeSaltWater();
+
+makeSaltWater.setBeaker(new beaker(90, 10));	//水90g,塩10gの入ったビーカー
+makeSaltWater.execute();
+
+</script>
+</body>
+</html>
