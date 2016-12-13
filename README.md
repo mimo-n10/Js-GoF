@@ -19,4 +19,5 @@ TECHSCORE様
 18 Memento 2016.12.6  
 19 State 2016.12.6  
 20 Flyweight 2016.12.8  
-21 Proxy 2016.12.08
+21 Proxy 2016.12.08  
+22 Command 2016.12.13  
